@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -81,7 +82,7 @@ public class EventSimulator {
 
                 try {
                     // Check and add serve event if possible
-                    Server s = this.chooseServer();
+                    Server s = this.listOfServers.get(c.chooseServerIndex(this.mapServerTo(x -> x.canServe())));
                     s.serveCustomer(c);
                     eventQueue.add(e.createServingEvent(c, s));
                 
@@ -89,10 +90,7 @@ public class EventSimulator {
                     // When all servers cannot serve
                     try {
                         // Check and add wait event if possible
-                        Server s = this.chooseServerForWait();
-                        if (c instanceof GreedyCustomer) {
-                            s = this.chooseServerForWaitGreedy();
-                        }
+                        Server s = this.listOfServers.get(c.chooseServerForWaitIndex(this.mapServerTo(x -> x.diffFromMax())));
                         s.addWaitingCustomer(c);
                         eventQueue.add(e.createWaitingEvent(c, s));
 
@@ -152,32 +150,14 @@ public class EventSimulator {
         System.out.println(finalStats);
     }
 
-    Server chooseServer() {
-        for (Server s : this.listOfServers) {
-            if (s.canServe()) {
-                return s;
-            }
-        }
-        throw new NoSuchElementException("No avaliable Server");
-    }
 
-    Server chooseServerForWait() {
-        for (Server s : this.listOfServers) {
-            if (s.canWait()) {
-                return s;
-            }
-        }
-        throw new NoSuchElementException("No avaliable Server");
-    }
 
-    Server chooseServerForWaitGreedy() {
-        Server s1 = this.chooseServerForWait();
-        for (Server s : listOfServers) {
-            if (s.hasShorterQueue(s1)) {
-                s1 = s;
-            }
+    <T> ArrayList<T> mapServerTo(Function<Server, T> mapper) {
+        ArrayList<T> mappedList = new ArrayList<T>();
+        for (Server s : this.listOfServers) {
+            mappedList.add(mapper.apply(s));
         }
-        return s1;     
+        return mappedList;
     }
 
 

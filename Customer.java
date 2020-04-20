@@ -1,6 +1,9 @@
 package cs2030.simulator;
 
 import java.lang.Comparable;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 
 
 
@@ -31,7 +34,29 @@ class Customer implements Comparable<Customer> {
         }
     }
 
+    int chooseServerIndex(ArrayList<Boolean> canServeList) {
+        int index = 0;
+        for (Boolean b : canServeList) {
+            if (b) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+        throw new NoSuchElementException("No avaliable Server");
+    }
 
+    int chooseServerForWaitIndex(ArrayList<Integer> diffFromMaxList) {
+        int index = 0;
+        for (Integer i : diffFromMaxList) {
+            if (i < 0) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+        throw new NoSuchElementException("No avaliable Server");
+    }
 
     double waitingTime(double currentTime) {
         return currentTime - this.initialArrivalTime;

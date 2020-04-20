@@ -53,8 +53,8 @@ class Server {
         this.currentlyServing = Optional.ofNullable(c);
     }
 
-    boolean canWait() {
-        return (this.waitingCustomers.size() < this.maxQueueLength);
+    int diffFromMax() {
+        return this.waitingCustomers.size() - this.maxQueueLength;
     }
 
     void addWaitingCustomer(Customer c) {
