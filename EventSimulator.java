@@ -79,10 +79,11 @@ public class EventSimulator {
             // Handle arrival events
             if (e.isArrival()) {
                 Customer c = e.getCustomerDetails();
+                AllServerSummary summary = this.createSummary();
 
                 try {
                     // Check and add serve event if possible
-                    Server s = this.listOfServers.get(c.chooseServerIndex(this.mapServerTo(x -> x.canServe())));
+                    Server s = this.listOfServers.get(c.chooseServerIndex(summary));
                     s.serveCustomer(c);
                     eventQueue.add(e.createServingEvent(c, s));
                 
@@ -90,7 +91,7 @@ public class EventSimulator {
                     // When all servers cannot serve
                     try {
                         // Check and add wait event if possible
-                        Server s = this.listOfServers.get(c.chooseServerForWaitIndex(this.mapServerTo(x -> x.diffFromMax())));
+                        Server s = this.listOfServers.get(c.chooseServerForWaitIndex(summary));
                         s.addWaitingCustomer(c);
                         eventQueue.add(e.createWaitingEvent(c, s));
 
@@ -152,14 +153,12 @@ public class EventSimulator {
 
 
 
-    <T> ArrayList<T> mapServerTo(Function<Server, T> mapper) {
-        ArrayList<T> mappedList = new ArrayList<T>();
-        for (Server s : this.listOfServers) {
-            mappedList.add(mapper.apply(s));
-        }
-        return mappedList;
-    }
 
+    AllServerSummary createSummary() {
+        AllServerSummary as = new AllServerSummary();
+        this.listOfServers.stream().forEachOrdered(x -> {if (x.canServe()) {as.addStatus(AllServerSummary.AVALIABLE);} else if (!x.canWait()) {as.addStatus(AllServerSummary.FULL);} else {as.addStatus(x.waitingQueueSize());}});
+        return as;
+    }
 
     
 }

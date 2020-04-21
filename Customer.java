@@ -34,28 +34,12 @@ class Customer implements Comparable<Customer> {
         }
     }
 
-    int chooseServerIndex(ArrayList<Boolean> canServeList) {
-        int index = 0;
-        for (Boolean b : canServeList) {
-            if (b) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-        throw new NoSuchElementException("No avaliable Server");
+    int chooseServerIndex(AllServerSummary as) {
+        return as.getFirstAvaliableIndex();
     }
 
-    int chooseServerForWaitIndex(ArrayList<Integer> diffFromMaxList) {
-        int index = 0;
-        for (Integer i : diffFromMaxList) {
-            if (i < 0) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-        throw new NoSuchElementException("No avaliable Server");
+    int chooseServerForWaitIndex(AllServerSummary as) {
+        return as.getFirstWaitingIndex();
     }
 
     double waitingTime(double currentTime) {

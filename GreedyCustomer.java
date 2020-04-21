@@ -11,19 +11,8 @@ class GreedyCustomer extends Customer {
     }
 
     @Override
-    int chooseServerForWaitIndex(ArrayList<Integer> diffFromMaxList) {
-        int smallestIndex = super.chooseServerForWaitIndex(diffFromMaxList);
-        int smallestQueueSize = diffFromMaxList.get(smallestIndex);
-        int result = smallestIndex;
-        int index = 0;
-        for (Integer i : diffFromMaxList) {
-            if (i < smallestQueueSize) {
-                result = index;
-            } else {
-                index++;
-            }
-        }
-        return result;
+    int chooseServerForWaitIndex(AllServerSummary as) {
+        return as.getShortestWaitingIndex();
     }
 
     @Override

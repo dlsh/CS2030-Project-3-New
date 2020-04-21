@@ -57,6 +57,14 @@ class Server {
         return this.waitingCustomers.size() - this.maxQueueLength;
     }
 
+    int waitingQueueSize() {
+        return this.waitingCustomers.size();
+    }
+
+    boolean canWait() {
+        return this.waitingCustomers.size() < this.maxQueueLength;
+    }
+
     void addWaitingCustomer(Customer c) {
         this.waitingCustomers.add(c);
     }
