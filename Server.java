@@ -10,8 +10,9 @@ import java.util.Optional;
  * The <code>Server</code> is made mutable so that it can be immediately updated 
  * when there are changes to the <code>Customer</code> it is serving, 
  * or its waiting queue.
- * The <code>Customer</code> that it is serving is encapsulated by an Optional - 
- * there are cases where the <code>Server</code> is not serving anyone.
+ * The <code>Customer</code> that it is serving is encapsulated by an 
+ * <code>Optional</code> - this accounts for cases where the 
+ * <code>Server</code> is not serving anyone.
  */
 class Server {
 
