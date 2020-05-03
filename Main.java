@@ -2,25 +2,30 @@ import cs2030.simulator.EventSimulator;
 import java.util.Scanner;
 
 /**
- * A program which takes in several inputs through a Scanner object and 
- * prints out the entire resulting sequence of events through an EventSimulator object.
+ * A program which takes in several inputs through a <code>Scanner</code> Object and 
+ * prints out the entire resulting sequence of <code>Event</code>s through an 
+ * <code>EventSimulator</code> Object.
  * The inputs are:
- * <p>A seed for a RandomGenerator object</p>
- * <p>The total number of Servers and SelfCheckout counters respectively</p>
+ * <p>A seed for a <code>RandomGenerator</code> Object</p>
+ * <p>The total number of <code>Servers</code> and 
+ * <code>SelfCheckout</code> counters respectively</p>
  * <p>Maximum waiting queue length</p>
- * <p>Total number of customers</p>
- * <p>Customer arrival rate</p>
- * <p>Customer service rate</p>
- * <p>Server resting rate</p>
- * <p>Server resting probability</p>
- * <p>Probability that a customer is greedy</p>
+ * <p>Total number of <code>Customer</code>s</p>
+ * <p><code>Customer</code> arrival rate - to be used to initialise the 
+ * <code>RandomGenerator</code> Object</p>
+ * <p><code>Customer</code> service rate - to be used to initialise the 
+ * <code>RandomGenerator</code> Object</p>
+ * <p><code>Server</code> resting rate - to be used to initialise the 
+ * <code>RandomGenerator</code> Object</p>
+ * <p><code>Server</code> cut-off resting probability</p>
+ * <p>Cut-off probability that a <code>Customer</code> is greedy</p>
  */
 public class Main {
 
     /**
      * The actual program that runs and 
-     * prints out the entire sequence of events.
-     * @param args The inputs taken in by the Scanner object.
+     * prints out the entire sequence of <code>Event</code>s.
+     * @param args The inputs taken in by the <code>Scanner</code> object.
      */
     public static void main(final String[] args) {
         

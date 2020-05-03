@@ -80,7 +80,7 @@ class Server {
     /**
      * Takes in a <code>Customer</code> and updates the <code>Server</code> 
      * to be serving this <code>Customer</code>.
-     * @param c The <code>Customer</code> that is being served by this <code>Server</code>.
+     * @param c The <code>Customer</code> that is being served by this <code>Server</code>
      */
     void serveCustomer(Customer c) {
         this.currentlyServing = Optional.ofNullable(c);
@@ -88,7 +88,7 @@ class Server {
 
     /**
      * Shows the difference between the size of the waiting queue and the maximum queue length.
-     * @return Size of waiting queue - maximum queue length
+     * @return The resulting integer value of (size of waiting queue - the maximum queue length)
      */
     int diffFromMax() {
         return this.waitingCustomers.size() - this.maxQueueLength;
@@ -145,7 +145,7 @@ class Server {
     /**
      * Checks whether the <code>Server</code> rests based on a 
      * <code>RandomGenerator</code> object 
-     * and a given resting probability.
+     * and a given <code>restingProbability</code> value.
      * @param rg The <code>RandomGenerator</code> object
      * @param restingProbability The cut-off probability that determines 
      *     whether the <code>Server</code> rests.

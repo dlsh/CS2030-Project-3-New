@@ -13,47 +13,48 @@ import java.util.stream.IntStream;
 
 
 /**
- * Simulates a sequence of events based on several input factors.
- * <p>The total number of Servers and SelfCheckout counters respectively</p>
+ * Simulates a sequence of <code>Event</code>s based on several input factors.
+ * <p>The total number of <code>Server</code>s and 
+ * <code>SelfCheckout</code> counters respectively</p>
  * <p>Maximum waiting queue length</p>
- * <p>Total number of customers</p>
- * <p>A seed for a RandomGenerator object</p>
- * <p>Customer arrival rate</p>
- * <p>Customer service rate</p>
- * <p>Server resting rate</p>
- * <p>Server resting probability</p>
- * <p>Probability that a customer is greedy</p>
+ * <p>Total number of <code>Customer</code>s</p>
+ * <p>A seed for a <code>RandomGenerator</code> object</p>
+ * <p><code>Customer</code> arrival rate</p>
+ * <p><code>Customer</code> service rate</p>
+ * <p><code>Server</code> resting rate</p>
+ * <p><code>Server</code> resting probability</p>
+ * <p>Probability that a <code>Customer</code> is greedy</p>
  */
 public class EventSimulator {
 
 
     /**
-     * Queue of Events.
+     * Queue of <code>Event</code>s.
      */
     private final PriorityQueue<Event> eventQueue;
 
     /**
-     * List of Servers. Determined by number of servers.
+     * List of all <code>Server</code>s involved in the simulation.
      */
     private final ArrayList<Server> listOfServers;
 
     
     /**
-     * RandomGenerator Object.
+     * <code>RandomGenerator</code> Object to generate randomised timings.
      */
     private final RandomGenerator randomGenerator;
 
     /**
-     * Probability of Server resting.
+     * Probability of a <code>Server</code> resting.
      */
     private final double restingProbability;
 
     /**
-     * Constructs the EventSimulator Object.
-     * @param eventQueue The queue of events
-     * @param listOfServers The list of all Servers involved
-     * @param randomGenerator The RandomGenerator object
-     * @param restingProbability The resting probability for all Servers
+     * Constructs the <code>EventSimulator</code> Object.
+     * @param eventQueue The queue of <code>Event</code>s
+     * @param listOfServers The list of all <code>Server</code>s involved
+     * @param randomGenerator The <code>RandomGenerator</code> object
+     * @param restingProbability The resting probability for all <code>Server</code>s
      */
     private EventSimulator(PriorityQueue<Event> eventQueue, ArrayList<Server> listOfServers, 
             RandomGenerator randomGenerator, double restingProbability) {
@@ -64,25 +65,38 @@ public class EventSimulator {
     }
 
     /**
-     * Initialises the EventSimulator object in its starting state.
-     * @param numOfServers Total number of Servers. 
-     *     Will be added to the list of Servers in order.
-     * @param numOfCheckOut Total number of SelfCheckout counters. 
-     *     Will be added to the list of Servers after all regular Servers have been added.
-     * @param maxQueueLength Maximum waiting queue length per Server.
-     * @param numCustomers Total number of customers. 
-     *     Will be used to pre-generate arrival events into the event queue.
-     * @param seed Seed for the RandomGenerator object.
-     * @param customerArrivalRate The customer arrival rate determines 
-     *     the amount of time between each customer's arrival time.
-     * @param customerServiceRate The customer service rate determines 
-     *     the amount of time it takes for a Server to finish serving this customer.
-     * @param restingRate The Server's resting rate determines the amount of 
-     *     time that the Server rests for.
-     * @param restingProbability The probability that a Server will rest after serving a customer.
-     * @param greedyProbability The probability that a Customer is a GreedyCustomer.
-     * @return A new EventSimulator object with pre-generated arrival events in its event queue 
-     *     and all Servers and SelfCheckout counters stored into a list.
+     * Initialises the <code>EventSimulator</code> object in its starting state.
+     * @param numOfServers Total number of <code>Server</code>s. 
+     *     Will be added to the list of <code>Server</code>s in order of initialisation.
+     * @param numOfCheckOut Total number of <code>SelfCheckout</code> counters. 
+     *     Will be added to the list of <code>Server</code>s after all regular 
+     *     <code>Server</code>s have been added.
+     *     Will also be added in order of initialisation.
+     * @param maxQueueLength Maximum waiting queue length per <code>Server</code>.
+     * @param numCustomers Total number of <code>Customer</code>s. 
+     *     Will be used to pre-generate arrival <code>Event</code>s 
+     *     into the <code>Event</code>s queue.
+     * @param seed Seed for initialising the <code>RandomGenerator</code> Object.
+     * @param customerArrivalRate The <code>Customer</code> arrival rate determines 
+     *     the amount of time between each <code>Customer</code>'s arrival time. 
+     *     It is used in the initialisation of the <code>RandomGenerator</code>
+     *     Object.
+     * @param customerServiceRate The <code>Customer</code> service rate determines 
+     *     the amount of time it takes for a <code>Server</code> to finish serving 
+     *     this <code>Customer</code>. It is used in the initialisation of a 
+     *     <code>RandomGenerator</code> Object.
+     * @param restingRate The <code>Server</code>'s resting rate determines the amount of 
+     *     time that the <code>Server</code> rests for. It is used in the initialisation of 
+     *     the <code>RandomGenerator</code> Object.
+     * @param restingProbability The probability that a <code>Server</code> will rest after 
+     *     serving a <code>Customer</code>
+     * @param greedyProbability The cut-off probability that determines whether a 
+     *     <code>Customer</code> is a GreedyCustomer. If the generated probability 
+     *     is below this <code>greedyProbability</code>, the <code>Customer</code> is 
+     *     a <code>GreedyCustomer</code>
+     * @return A new <code>EventSimulator</code> object with pre-generated arrival 
+     *     <code>Event</code>s in its <code>Event</code>s queue 
+     *     and all <code>Server</code>s and <code>SelfCheckout</code> counters stored into a list
      */
     public static EventSimulator initialise(int numOfServers, int numOfCheckOut, 
             int maxQueueLength, int numCustomers, int seed, double customerArrivalRate, 
@@ -122,8 +136,9 @@ public class EventSimulator {
     }
 
     /**
-     * Goes through the existing sequence of events currently stored in the events queue.
-     * Simulates the entire sequence of events that occur as a result and 
+     * Goes through the existing sequence of <code>Event</code>s currently stored 
+     * in the <code>Event</code>s queue.
+     * Simulates the entire sequence of <code>Event</code>s that occur as a result and 
      * prints out this entire sequence.
      */
     public void serviceCustomers() {
@@ -145,7 +160,7 @@ public class EventSimulator {
                     // Check and add serve event if possible
                     Server s = this.listOfServers.get(c.chooseServerIndex(summary));
                     s.serveCustomer(c);
-                    eventQueue.add(e.createServingEvent(c, s));
+                    eventQueue.add(e.createServingEvent(s));
                 
                 } catch (NoSuchElementException ex1) {
                     // When all servers cannot serve
@@ -153,7 +168,7 @@ public class EventSimulator {
                         // Check and add wait event if possible
                         Server s = this.listOfServers.get(c.chooseServerForWaitIndex(summary));
                         s.addWaitingCustomer(c);
-                        eventQueue.add(e.createWaitingEvent(c, s));
+                        eventQueue.add(e.createWaitingEvent(s));
 
                     } catch (NoSuchElementException ex2) {
                         // If unable to find server & unable to find queue, customer leaves
@@ -215,9 +230,9 @@ public class EventSimulator {
 
 
     /**
-     * Creates a summary of all Servers in the list of Servers.
-     * @return An AllServerSummary object that summarises the information from 
-     *     all Servers in the list of Servers.
+     * Creates a summary of all <code>Server</code>s in the list of <code>Server</code>s.
+     * @return An <code>AllServerSummary</code> Object that summarises the information from 
+     *     all <code>Server</code>s in the list of <code>Server</code>s.
      */
     private AllServerSummary createSummary() {
         AllServerSummary as = new AllServerSummary();

@@ -8,24 +8,25 @@ import java.util.NoSuchElementException;
 
 
 /**
- * Models a Customer. A Customer is initialised with ID and their initial arrival time.
+ * Models a <code>Customer</code>. A <code>Customer</code> is initialised 
+ * with ID and their initial arrival time.
  */
 class Customer implements Comparable<Customer> {
 
     /**
-     * Identify each Customer with an integer.
+     * Identify each <code>Customer</code> with an integer.
      */
     private final int id;
 
     /**
-     * Initial arrival time of the Customer.
+     * Initial arrival time of the <code>Customer</code>.
      */
     private final double initialArrivalTime;
 
     /**
-     * Initialises a customer with an integer for their ID and an initial arrival time.
-     * @param id An integer acting as an identifier.
-     * @param initialArrivalTime The initial arrival time of the customer
+     * Initialises a <code>Customer</code> with an integer for their ID and an initial arrival time.
+     * @param id An integer acting as an identifier
+     * @param initialArrivalTime The initial arrival time of the <code>Customer</code>
      */
     Customer(int id, double initialArrivalTime) {
         this.id = id;
@@ -33,10 +34,10 @@ class Customer implements Comparable<Customer> {
     }
 
     /**
-     * Compare customers based on their ID.
-     * @param c The customer that is being compared to.
-     * @return 1, -1, 0 if this customer is greater than, lesser than 
-     *     or equals to the compared customer <code>c</code>.
+     * Compare <code>Customer</code>s based on their ID.
+     * @param c The <code>Customer</code> that is being compared to
+     * @return 1, -1, 0 if this <code>Customer</code> is greater than, lesser than 
+     *     or equals to the compared <code>Customer</code> <code>c</code>
      */
     public int compareTo(Customer c) {
         if (this.id > c.id) {
@@ -49,31 +50,35 @@ class Customer implements Comparable<Customer> {
     }
 
     /**
-     * Chooses a server to serve the customer and returns the Server's index in a list of Servers.
-     * @param as The overall summary of all Servers.
-     * @return The index of the chosen Server in a list of Servers.
-     * @throws NoSuchElementException if no Server is able to serve this customer immediately.
+     * Chooses a <code>Server</code> to serve the <code>Customer</code> and 
+     * returns the <code>Server</code>'s index in a list of <code>Server</code>s.
+     * @param as An <code>AllServerSummary</code> object describing 
+     *     the overall summary of all <code>Server</code>s
+     * @return The index of the chosen <code>Server</code> in a list of <code>Server</code>s
+     * @throws NoSuchElementException if no <code>Server</code> is able to serve 
+     *     this <code>Customer</code> immediately
      */
     int chooseServerIndex(AllServerSummary as) {
         return as.getFirstAvaliableIndex();
     }
 
     /**
-     * Chooses a server with a queue for a customer to wait and 
-     * returns the Server's index in a list of Servers.
-     * @param as The overall summary of all Servers.
-     * @return The index of the chosen Server in a list of Servers.
-     * @throws NoSuchElementException if no Server is able to accept this 
-     * customer into their waiting queue.
+     * Chooses a <code>Server</code> with a queue for a <code>Customer</code> to wait and 
+     * returns the <code>Server</code>'s index in a list of <code>Server</code>s.
+     * @param as An <code>AllServerSummary</code> object describing 
+     *     the overall summary of all <code>Server</code>s
+     * @return The index of the chosen <code>Server</code> in a list of <code>Server</code>s
+     * @throws NoSuchElementException if no <code>Server</code> is able to accept this 
+     *     <code>Customer</code> into their waiting queue
      */
     int chooseServerForWaitIndex(AllServerSummary as) {
         return as.getFirstWaitingIndex();
     }
 
     /**
-     * Find the total waiting time taken between the customer's initial arrival 
+     * Find the total waiting time taken between the <code>Customer</code>'s initial arrival 
      * and them being served.
-     * @param currentTime Time of serving event.
+     * @param currentTime Time of serving event
      * @return The difference between <code>currentTime</code> and initial arriving time
      */
     double waitingTime(double currentTime) {
@@ -81,8 +86,8 @@ class Customer implements Comparable<Customer> {
     }
 
     /**
-     * Returns the Customer's ID in string format.
-     * @return Customer ID as string.
+     * Returns the <code>Customer</code>'s ID in string format.
+     * @return <code>Customer</code>'s ID as string
      */
     @Override
     public String toString() {
